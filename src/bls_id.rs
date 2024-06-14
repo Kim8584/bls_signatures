@@ -72,3 +72,14 @@ impl Aggregate {
         right_side == left_side
     }
 }
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn test_aggregate_pks() {
+        let a = G1::rand(&mut ark_std::rand::thread_rng());
+        let three_a_s = Aggregate::aggregate_pks(&[a, a, a]);
+        let three_a_s2 = (a + a) + a;
+        assert_eq!(three_a_s, three_a_s2);
+    }
+}
