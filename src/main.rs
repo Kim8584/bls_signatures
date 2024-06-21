@@ -38,7 +38,16 @@ fn main() {
     // getting the messeges a points
     let point1 = blake::hash_to_curve(message1);
     let point2 = blake::hash_to_curve(message2);
-
+    // lets verify the test for aggregate function with only the one signature (sig1)
+    let verified =
+        bls_id::Aggregate::verify_aggregate_signatures(sig1, &[pair1.get_public_key()], &[point1]);
+    assert!(verified);
+    // with sig2 alone()
+    let verified =
+        bls_id::Aggregate::verify_aggregate_signatures(sig2, &[pair2.get_public_key()], &[point2]);
+    assert!(verified);
+    // so wach this where the problem is for the aggregate signature the assettation does'nt work
+    // e(pk,sig) = (g1,sk * hash(message))
     let verified = bls_id::Aggregate::verify_aggregate_signatures(
         sig_aggregate,
         &[pair1.get_public_key(), pair2.get_public_key()],
@@ -46,7 +55,7 @@ fn main() {
     );
     assert!(verified);
 }
-// for testing reasons
+// for testing reasonss
 
 fn iko_sawa() {
     println!("iko sawa");
